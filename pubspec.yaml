@@ -1,0 +1,16 @@
+name: discord_interactions_test
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.14.4 <3.0.0"
+
+dependencies:
+  functions_framework: ^0.4.1
+  discord_interactions: ^0.0.4
+  shelf_web_socket: ^1.0.1
+
+dev_dependencies:
+  lints: ^1.0.0
+  build_runner: ^2.1.5
+  functions_framework_builder: ^0.4.4
