@@ -17,4 +17,4 @@ serverlog_stdout.txt
 .DS_Store
 
 # Credentials
-lib/credentials.dart
+bin/credentials.dart

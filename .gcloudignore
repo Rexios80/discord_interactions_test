@@ -3,4 +3,4 @@
 .gitignore
 #!include:.gitignore
 
-!lib/credentials.dart
+!bin/credentials.dart

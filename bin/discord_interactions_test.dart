@@ -1,15 +1,49 @@
-import 'package:functions_framework/serve.dart';
-import 'package:discord_interactions_test/functions.dart' as functions;
+import 'dart:convert';
+import 'dart:io';
+import 'package:discord_interactions/discord_interactions.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_web_socket/shelf_web_socket.dart' as shelf_ws;
+import 'package:web_socket_channel/web_socket_channel.dart';
 
-Future<void> main(List<String> args) async {
-  await serve(args, _nameToFunctionTarget);
+import 'credentials.dart';
+
+final validator = InteractionValidator(
+  applicationPublicKey: Credentials.applicationPublicKey,
+);
+
+WebSocketChannel? client;
+
+void main(List<String> arguments) {
+  final app = Router()
+    ..get('/rest', handleHttpRequest)
+    ..get('/ws', shelf_ws.webSocketHandler(handleWebSocketConnect));
+
+  shelf_io.serve(app, '0.0.0.0', int.parse(Platform.environment['PORT']!));
 }
 
-FunctionTarget? _nameToFunctionTarget(String name) {
-  switch (name) {
-    case 'function':
-      return FunctionTarget.http(functions.function);
-    default:
-      return null;
+Future<Response> handleHttpRequest(Request request) async {
+  final body = await request.readAsString();
+
+  final valid = validator.validate(headers: request.headers, body: body);
+  if (!valid) {
+    return Response(401, body: 'invalid request signature');
   }
+
+  final interaction = Interaction.fromJson(jsonDecode(body));
+
+  if (interaction.type == InteractionType.ping) {
+    return Response.ok(
+      jsonEncode(InteractionResponse(type: InteractionCallbackType.pong)),
+    );
+  }
+
+  client?.sink.add(body);
+
+  return Response.ok(null);
+}
+
+void handleWebSocketConnect(WebSocketChannel websocket) {
+  client = websocket;
 }
