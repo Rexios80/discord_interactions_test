@@ -1,5 +1,13 @@
-Create credentials file
+1. Create bin/credentials.dart
 
-gcloud beta run deploy discord-interactions-test --allow-unauthenticated --source=.
+```dart
+class Credentials {
+  static const applicationPublicKey = '*****';
+}
+```
 
-<!-- TODO -->
+2. Run the following command
+
+`gcloud beta run deploy discord-interactions-test --allow-unauthenticated --source=.`
+
+1. Add `[Google Cloud Run URL]/rest` as the `INTERACTIONS ENDPOINT URL` on your test bot's configuration page on the Discord Developer Portal
