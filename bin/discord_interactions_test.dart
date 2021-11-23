@@ -35,13 +35,19 @@ Future<Response> handleHttpRequest(Request request) async {
     return Response(401, body: 'invalid request signature');
   }
 
-  final interaction = Interaction.fromJson(jsonDecode(body));
+  // Try/catch this so that serialization errors don't prevent sending data to the client
+  try {
+    final interaction = Interaction.fromJson(jsonDecode(body));
 
-  // Respond to pings
-  if (interaction.type == InteractionType.ping) {
-    return Response.ok(
-      jsonEncode(InteractionResponse(type: InteractionCallbackType.pong)),
-    );
+    // Respond to pings
+    if (interaction.type == InteractionType.ping) {
+      return Response.ok(
+        jsonEncode(InteractionResponse(type: InteractionCallbackType.pong)),
+      );
+    }
+  } catch (e, stacktrace) {
+    print(e);
+    print(stacktrace);
   }
 
   // Send the Interaction to the test client
