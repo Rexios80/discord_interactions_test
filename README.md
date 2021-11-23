@@ -10,4 +10,4 @@ class Credentials {
 
 `gcloud beta run deploy discord-interactions-test --allow-unauthenticated --source=.`
 
-1. Add `[Google Cloud Run URL]/rest` as the `INTERACTIONS ENDPOINT URL` on your test bot's configuration page on the Discord Developer Portal
+3. Add `[Google Cloud Run URL]/rest` as the `INTERACTIONS ENDPOINT URL` on your test bot's configuration page on the Discord Developer Portal
