@@ -1,5 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart';
@@ -15,6 +16,7 @@ final validator = InteractionValidator(
 
 // The local instance of discord_intteractions that is running tests
 WebSocketChannel? client;
+Stream? clientStream;
 
 void main(List<String> arguments) {
   final app = Router()
@@ -45,9 +47,18 @@ Future<Response> handleHttpRequest(Request request) async {
   // Send the Interaction to the test client
   client?.sink.add(body);
 
+  // Wait for the client to confirm the Interaction was handled
+  await clientStream?.first;
+
   return Response.ok(null);
 }
 
-void handleWebSocketConnect(WebSocketChannel websocket) {
-  client = websocket;
+void handleWebSocketConnect(WebSocketChannel socket) {
+  client = socket;
+
+  // Convert socket.stream to a boradcast stream
+  final socketStreamController = StreamController.broadcast();
+  socket.stream.listen(socketStreamController.add);
+
+  clientStream = socketStreamController.stream;
 }
