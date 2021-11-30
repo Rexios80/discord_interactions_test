@@ -14,7 +14,7 @@ final validator = InteractionValidator(
   applicationPublicKey: Credentials.applicationPublicKey,
 );
 
-// The local instance of discord_intteractions that is running tests
+// The local instance of discord_interactions that is running tests
 WebSocketChannel? client;
 Stream? clientStream;
 

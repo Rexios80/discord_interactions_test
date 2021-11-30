@@ -11,4 +11,4 @@ dependencies:
   shelf_web_socket: ^1.0.1
 
 dev_dependencies:
-  lints: ^1.0.0
+  rexios_lints: ^1.0.0

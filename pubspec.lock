@@ -49,7 +49,14 @@ packages:
       name: discord_interactions
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.10"
+  flutter_lints:
+    dependency: transitive
+    description:
+      name: flutter_lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   http_methods:
     dependency: transitive
     description:
@@ -72,7 +79,7 @@ packages:
     source: hosted
     version: "4.3.0"
   lints:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: lints
       url: "https://pub.dartlang.org"
@@ -99,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.3"
+  rexios_lints:
+    dependency: "direct dev"
+    description:
+      name: rexios_lints
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   shelf:
     dependency: transitive
     description:
